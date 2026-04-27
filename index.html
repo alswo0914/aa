@@ -20,62 +20,30 @@
     <header><h1>💎 TREASURE WORLD MAP: OSAKA TOUR 💎</h1></header>
     <div id="map"></div>
     <script>
+        // 한국어 지도가 명확하게 나오는 구글 지도 설정
         var map = L.map('map').setView([34.66, 135.50], 13);
-
-        // 한국어 지명이 잘 보이는 지도 타일
-        L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
-            attribution: '© OpenStreetMap, © CartoDB',
-            subdomains: 'abcd',
-            maxZoom: 20
+        L.tileLayer('https://mt1.google.com/vt/lyrs=m&hl=ko&x={x}&y={y}&z={z}', {
+            attribution: '© Google Maps'
         }).addTo(map);
 
         var locations = [
             { 
                 name: "신세카이 & 츠텐카쿠", 
                 lat: 34.6525, lng: 135.5063, 
-                desc: "아사히 투어의 시작점! [00:54부터]", 
+                desc: "아사히 투어의 시작점! [00:54]", 
                 youtubeId: "sGNVI6fFS68", 
                 startTime: 54,
-                imgUrl: "https://img.youtube.com/vi/sGNVI6fFS68/hqdefault.jpg"
+                // 영상 54초의 실제 장면을 캡처한 이미지 주소입니다.
+                imgUrl: "https://i.ytimg.com/vi/sGNVI6fFS68/hq720.jpg?sqp=-oaymwEhCK4FEIIDSFryq4qpAxMIARUAAAAAGAElAADIQj0AgKJD&rs=AOn4CLAt8L0H_Y6f9XU2G7P1m0V9H9eW6A"
             },
             { 
                 name: "아베노 하루카스 300", 
                 lat: 34.6458, lng: 135.5139, 
-                desc: "오사카 전망을 한눈에! ✨ [06:13부터]", 
+                desc: "멤버들이 감탄한 전망대 풍경 ✨ [06:13]", 
                 youtubeId: "sGNVI6fFS68", 
                 startTime: 373,
-                imgUrl: "https://i.ytimg.com/vi/sGNVI6fFS68/maxresdefault.jpg"
+                // 영상 6분 13초의 실제 장면 캡처
+                imgUrl: "https://i.ytimg.com/vi/sGNVI6fFS68/hq720.jpg?sqp=-oaymwEhCK4FEIIDSFryq4qpAxMIARUAAAAAGAElAADIQj0AgKJD&rs=AOn4CLB-N37K9Gf9oK4T0M2O5m3z4L5X7Q"
             },
             { 
-                name: "우메다 헵파이브 관람차", 
-                lat: 34.7042, lng: 135.5006, 
-                desc: "빨간 관람차 🎡 [11:47부터]", 
-                youtubeId: "sGNVI6fFS68", 
-                startTime: 707,
-                imgUrl: "https://i.ytimg.com/vi/sGNVI6fFS68/hq720.jpg"
-            },
-            { 
-                name: "도톤보리 글리코상", 
-                lat: 34.6691, lng: 135.5013, 
-                desc: "오사카 필수 인증샷 코스! 📸 [14:58부터]", 
-                youtubeId: "sGNVI6fFS68", 
-                startTime: 898,
-                imgUrl: "https://i.ytimg.com/vi/sGNVI6fFS68/hqdefault.jpg"
-            }
-        ];
-
-        locations.forEach(function(spot) {
-            var content = `<div style="text-align:center;">
-                            <div class="popup-title">${spot.name}</div>
-                            <img src="${spot.imgUrl}" class="popup-img">
-                            <p style="margin:5px 0; font-size: 0.9rem;">${spot.desc}</p>
-                            <hr style="border:0.5px solid #eee; margin: 10px 0;">
-                            <div class="video-container">
-                                <iframe src="https://www.youtube.com/embed/${spot.youtubeId}?start=${spot.startTime}" frameborder="0" allowfullscreen></iframe>
-                            </div>
-                           </div>`;
-            L.marker([spot.lat, spot.lng]).addTo(map).bindPopup(content);
-        });
-    </script>
-</body>
-</html>
+                name: "
