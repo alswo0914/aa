@@ -20,10 +20,13 @@
     <header><h1>💎 TREASURE WORLD MAP: OSAKA TOUR 💎</h1></header>
     <div id="map"></div>
     <script>
-        // 한국어 지도가 뜨도록 구글 지도 엔진 설정 (hl=ko)
+        // 한국어 지명을 가장 확실하게 지원하는 지도 엔진
         var map = L.map('map').setView([34.66, 135.50], 13);
-        L.tileLayer('https://mt1.google.com/vt/lyrs=m&hl=ko&x={x}&y={y}&z={z}', {
-            attribution: '© Google Maps'
+        
+        L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
+            attribution: '© OpenStreetMap, © CartoDB',
+            subdomains: 'abcd',
+            maxZoom: 20
         }).addTo(map);
 
         var locations = [
@@ -33,17 +36,15 @@
                 desc: "아사히 투어 시작! 츠텐카쿠 앞 멤버들 [00:54]", 
                 youtubeId: "sGNVI6fFS68", 
                 startTime: 54,
-                // 영상 54초: 멤버들이 츠텐카쿠 배경으로 모여있는 실제 장면
-                imgUrl: "https://i.ytimg.com/vi/sGNVI6fFS68/hq720.jpg?sqp=-oaymwEhCK4FEIIDSFryq4qpAxMIARUAAAAAGAElAADIQj0AgKJD&rs=AOn4CLAt8L0H_Y6f9XU2G7P1m0V9H9eW6A"
+                imgUrl: "https://i.ytimg.com/vi/sGNVI6fFS68/hq720.jpg"
             },
             { 
                 name: "아베노 하루카스 300", 
                 lat: 34.6458, lng: 135.5139, 
-                desc: "헬리포트 옥상에서 감탄하는 멤버들 ✨ [06:13]", 
+                desc: "전망대 헬리포트 풍경 ✨ [06:13]", 
                 youtubeId: "sGNVI6fFS68", 
                 startTime: 373,
-                // 영상 6분 13초: 옥상에서 바람 맞으며 풍경 보는 장면
-                imgUrl: "https://i.ytimg.com/vi/sGNVI6fFS68/hq720.jpg?sqp=-oaymwEhCK4FEIIDSFryq4qpAxMIARUAAAAAGAElAADIQj0AgKJD&rs=AOn4CLB-N37K9Gf9oK4T0M2O5m3z4L5X7Q"
+                imgUrl: "https://i.ytimg.com/vi/sGNVI6fFS68/hq720.jpg"
             },
             { 
                 name: "우메다 헵파이브 관람차", 
@@ -51,14 +52,20 @@
                 desc: "빨간 관람차 안에서 신난 모습 🎡 [11:47]", 
                 youtubeId: "sGNVI6fFS68", 
                 startTime: 707,
-                // 영상 11분 47초: 관람차 내부에서 멤버들이 찍힌 장면
-                imgUrl: "https://i.ytimg.com/vi/sGNVI6fFS68/hq720.jpg?sqp=-oaymwEhCK4FEIIDSFryq4qpAxMIARUAAAAAGAElAADIQj0AgKJD&rs=AOn4CLC-M45P0L9z9K4T0M2O5m3z4L5X7Q"
+                imgUrl: "https://i.ytimg.com/vi/sGNVI6fFS68/hq720.jpg"
             },
             { 
                 name: "도톤보리 글리코상", 
                 lat: 34.6691, lng: 135.5013, 
-                desc: "글리코상 앞에서 다 같이 포즈! 📸 [14:58]", 
+                desc: "단체 인증샷 포즈! 📸 [14:58]", 
                 youtubeId: "sGNVI6fFS68", 
                 startTime: 898,
-                // 영상 14분 58초: 글리코상 앞에서 단체 인증샷 찍는 실제 장면
-                imgUrl: "
+                imgUrl: "https://i.ytimg.com/vi/sGNVI6fFS68/hq720.jpg"
+            }
+        ];
+
+        locations.forEach(function(spot) {
+            var content = `<div style="text-align:center;">
+                            <div class="popup-title">${spot.name}</div>
+                            <img src="${spot.imgUrl}" class="popup-img" alt="영상 실제 장면">
+                            <p style="margin:5px 0; font-size:
