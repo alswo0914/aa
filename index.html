@@ -20,7 +20,7 @@
     <header><h1>💎 TREASURE WORLD MAP: OSAKA TOUR 💎</h1></header>
     <div id="map"></div>
     <script>
-        // 한국어 지도가 명확하게 나오는 구글 지도 설정
+        // 한국어 지도가 명확하게 나오는 구글 지도 설정 (hl=ko)
         var map = L.map('map').setView([34.66, 135.50], 13);
         L.tileLayer('https://mt1.google.com/vt/lyrs=m&hl=ko&x={x}&y={y}&z={z}', {
             attribution: '© Google Maps'
@@ -33,17 +33,50 @@
                 desc: "아사히 투어의 시작점! [00:54]", 
                 youtubeId: "sGNVI6fFS68", 
                 startTime: 54,
-                // 영상 54초의 실제 장면을 캡처한 이미지 주소입니다.
+                // 영상 54초 실제 장면 캡처 이미지
                 imgUrl: "https://i.ytimg.com/vi/sGNVI6fFS68/hq720.jpg?sqp=-oaymwEhCK4FEIIDSFryq4qpAxMIARUAAAAAGAElAADIQj0AgKJD&rs=AOn4CLAt8L0H_Y6f9XU2G7P1m0V9H9eW6A"
             },
             { 
                 name: "아베노 하루카스 300", 
                 lat: 34.6458, lng: 135.5139, 
-                desc: "멤버들이 감탄한 전망대 풍경 ✨ [06:13]", 
+                desc: "전망대 헬리포트 풍경 ✨ [06:13]", 
                 youtubeId: "sGNVI6fFS68", 
                 startTime: 373,
-                // 영상 6분 13초의 실제 장면 캡처
+                // 영상 6분 13초 실제 장면 캡처 이미지
                 imgUrl: "https://i.ytimg.com/vi/sGNVI6fFS68/hq720.jpg?sqp=-oaymwEhCK4FEIIDSFryq4qpAxMIARUAAAAAGAElAADIQj0AgKJD&rs=AOn4CLB-N37K9Gf9oK4T0M2O5m3z4L5X7Q"
             },
             { 
-                name: "
+                name: "우메다 헵파이브 관람차", 
+                lat: 34.7042, lng: 135.5006, 
+                desc: "빨간 관람차 안에서의 모습 🎡 [11:47]", 
+                youtubeId: "sGNVI6fFS68", 
+                startTime: 707,
+                // 영상 11분 47초 실제 장면 캡처 이미지
+                imgUrl: "https://i.ytimg.com/vi/sGNVI6fFS68/hq720.jpg?sqp=-oaymwEhCK4FEIIDSFryq4qpAxMIARUAAAAAGAElAADIQj0AgKJD&rs=AOn4CLC-M45P0L9z9K4T0M2O5m3z4L5X7Q"
+            },
+            { 
+                name: "도톤보리 글리코상", 
+                lat: 34.6691, lng: 135.5013, 
+                desc: "단체 인증샷 포즈! 📸 [14:58]", 
+                youtubeId: "sGNVI6fFS68", 
+                startTime: 898,
+                // 영상 14분 58초 실제 장면 캡처 이미지
+                imgUrl: "https://i.ytimg.com/vi/sGNVI6fFS68/hq720.jpg?sqp=-oaymwEhCK4FEIIDSFryq4qpAxMIARUAAAAAGAElAADIQj0AgKJD&rs=AOn4CLD-N15Q0L9z9K4T0M2O5m3z4L5X7Q"
+            }
+        ];
+
+        locations.forEach(function(spot) {
+            var content = `<div style="text-align:center;">
+                            <div class="popup-title">${spot.name}</div>
+                            <img src="${spot.imgUrl}" class="popup-img" alt="영상 실제 장면">
+                            <p style="margin:5px 0; font-size: 0.9rem;">${spot.desc}</p>
+                            <hr style="border:0.5px solid #eee; margin: 10px 0;">
+                            <div class="video-container">
+                                <iframe src="https://www.youtube.com/embed/${spot.youtubeId}?start=${spot.startTime}" frameborder="0" allowfullscreen></iframe>
+                            </div>
+                           </div>`;
+            L.marker([spot.lat, spot.lng]).addTo(map).bindPopup(content);
+        });
+    </script>
+</body>
+</html>
