@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>TREASURE OSAKA MAP</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <style>
+        body { margin: 0; font-family: sans-serif; background-color: #f4f7f9; }
+        header { background: #00ADEF; color: white; text-align: center; padding: 15px; }
+        #map { height: 85vh; width: 100%; }
+        .video-container { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; margin-top: 10px; width: 260px; border-radius: 8px; }
+        .video-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
+        .leaflet-popup-content { width: 280px !important; }
+        .popup-title { font-size: 1.1rem; color: #00ADEF; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <header><h1>💎 TREASURE 성지순례: OSAKA Tour 💎</h1></header>
+    <div id="map"></div>
+    <script>
+        var map = L.map('map').setView([34.66, 135.50], 13);
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { 
+            attribution: '© OpenStreetMap' 
+        }).addTo(map);
+
+        var locations = [
+            { name: "신세카이 & 츠텐카쿠", lat: 34.6525, lng: 135.5063, desc: "아사히 투어의 시작점! [00:54부터]", youtubeId: "sGNVI6fFS68", startTime: 54 },
+            { name: "아베노 하루카스 300", lat: 34.6458, lng: 135.5139, desc: "전망대 헬리포트 ✨ [06:13부터]", youtubeId: "sGNVI6fFS68", startTime: 373 },
+            { name: "우메다 헵파이브 관람차", lat: 34.7042, lng: 135.5006, desc: "빨간 관람차 🎡 [11:47부터]", youtubeId: "sGNVI6fFS68", startTime: 707 },
+            { name: "도톤보리 글리코상", lat: 34.6691, lng: 135.5013, desc: "단체 인증샷 스팟! 📸 [14:58부터]", youtubeId: "sGNVI6fFS68", startTime: 898 }
+        ];
+
+        locations.forEach(function(spot) {
+            var content = `<div style="text-align:center;">
+                            <div class="popup-title">${spot.name}</div>
+                            <p style="margin:5px 0; font-size: 0.9rem;">${spot.desc}</p>
+                            <div class="video-container">
+                                <iframe src="https://www.youtube.com/embed/${spot.youtubeId}?start=${spot.startTime}" frameborder="0" allowfullscreen></iframe>
+                            </div>
+                           </div>`;
+            L.marker([spot.lat, spot.lng]).addTo(map).bindPopup(content);
+        });
+    </script>
+</body>
+</html>
