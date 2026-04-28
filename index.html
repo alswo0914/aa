@@ -7,18 +7,15 @@
     <style>
         body { margin: 0; padding: 0; }
         #map { height: 100vh; width: 100%; }
-        /* 팝업 창 디자인 */
         .popup-container { width: 280px; font-family: 'Malgun Gothic', sans-serif; padding: 5px; }
         .popup-title { font-size: 18px; font-weight: bold; margin-bottom: 12px; color: #333; text-align: center; }
-        /* 사진 스타일 */
         .thumb-img { width: 100%; height: auto; border-radius: 8px; margin-bottom: 10px; display: block; border: 1px solid #eee; }
-        /* 영상 스타일 (16:9 비율 고정) */
         .video-container { 
             position: relative; width: 100%; padding-bottom: 56.25%; height: 0; 
             border-radius: 8px; overflow: hidden; margin-bottom: 10px; border: 1px solid #eee;
         }
         .video-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; }
-        .popup-desc { font-size: 13px; color: #555; margin-bottom: 12px; line-height: 1.5; word-break: keep-all; }
+        .popup-desc { font-size: 13px; color: #555; margin-bottom: 12px; line-height: 1.5; }
         .map-btn { 
             display: block; background: #4285F4; color: white; text-align: center; 
             padding: 12px; border-radius: 8px; text-decoration: none; font-size: 14px; font-weight: bold;
@@ -30,47 +27,41 @@
 
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script>
-        // 1. 지도 설정 (바탕 지도를 한국어 구글 지도로 고정)
+        // 1. 구글 한국어 지도 설정
         var map = L.map('map').setView([34.7042, 135.5006], 13);
-        L.tileLayer('https://mt0.google.com/vt/lyrs=m&hl=ko&x={x}&y={y}&z={z}', {
-            attribution: '© Google Maps'
-        }).addTo(map);
+        L.tileLayer('https://mt0.google.com/vt/lyrs=m&hl=ko&x={x}&y={y}&z={z}').addTo(map);
 
-        // 2. 데이터 구성 (사진을 링크 대신 안전한 유튜브 썸네일과 임베드 방식으로 처리)
+        // 2. 데이터 (유튜브 썸네일 API를 활용해 사진 문제를 해결)
         var locations = [
             {
                 name: "우메다 헵파이브(HEP FIVE) 관람차",
                 coords: [34.7042, 135.5006],
-                desc: "트레저 멤버들이 빨간 관람차 안에서 오사카 전경을 감상하며 즐거운 시간을 보낸 성지입니다.",
-                // 사진 경로가 계속 깨져서, 가장 확실하게 뜨는 유튜브 고화질 썸네일로 대체했어!
-                img: "https://img.youtube.com/vi/V6_Vp9vC0Xg/maxresdefault.jpg", 
-                yt: "https://www.youtube.com/embed/V6_Vp9vC0Xg?start=215",
-                googleMap: "https://www.google.com/maps/search/?api=1&query=HEP+FIVE+Ferris+Wheel&hl=ko"
+                desc: "트레저 멤버들이 빨간 관람차 안에서 오사카 전경을 감상한 성지입니다.",
+                // 깃허브 파일 대신 유튜브 서버에서 직접 가져오는 고화질 이미지 (절대 안 깨짐)
+                img: "https://i.ytimg.com/vi/V6_Vp9vC0Xg/maxresdefault.jpg", 
+                yt: "https://www.youtube.com/embed/V6_Vp9vC0Xg?autoplay=0&rel=0",
+                link: "https://www.google.com/maps/search/?api=1&query=HEP+FIVE+Ferris+Wheel&hl=ko"
             },
             {
                 name: "신세카이 & 츠텐카쿠",
                 coords: [34.6525, 135.5063],
-                desc: "오사카의 레트로한 감성이 가득한 곳! 멤버들이 맛있는 쿠시카츠 먹방을 찍었던 장소입니다.",
-                img: "https://img.youtube.com/vi/V6_Vp9vC0Xg/hqdefault.jpg",
+                desc: "오사카의 레트로한 감성! 멤버들의 쿠시카츠 먹방 장소입니다.",
+                img: "https://i.ytimg.com/vi/V6_Vp9vC0Xg/hqdefault.jpg",
                 yt: "https://www.youtube.com/embed/V6_Vp9vC0Xg?start=54",
-                googleMap: "https://www.google.com/maps/search/?api=1&query=Tsutenkaku&hl=ko"
+                link: "https://www.google.com/maps/search/?api=1&query=Tsutenkaku&hl=ko"
             }
         ];
 
-        // 3. 마커 및 팝업 생성
         locations.forEach(function(loc) {
             var popupContent = `
                 <div class="popup-container">
                     <div class="popup-title">${loc.name}</div>
-                    
-                    <img src="${loc.img}" class="thumb-img" alt="성지 사진">
-                    
+                    <img src="${loc.img}" class="thumb-img">
                     <div class="video-container">
                         <iframe src="${loc.yt}" allowfullscreen></iframe>
                     </div>
-                    
                     <div class="popup-desc">${loc.desc}</div>
-                    <a href="${loc.googleMap}" target="_blank" class="map-btn">상세 위치 보기 (구글맵)</a>
+                    <a href="${loc.link}" target="_blank" class="map-btn">한국어 구글맵에서 보기</a>
                 </div>
             `;
             L.marker(loc.coords).addTo(map).bindPopup(popupContent);
