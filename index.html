@@ -6,12 +6,15 @@
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <style>
         body { margin: 0; padding: 0; }
-        /* 지도가 한국어로 잘 보이도록 배경색 설정 */
         #map { height: 100vh; width: 100%; }
-        .popup-container { width: 250px; font-family: 'Malgun Gothic', sans-serif; }
+        /* 팝업 창 크기를 영상이 잘 보이게 조정 */
+        .popup-container { width: 280px; font-family: 'Malgun Gothic', sans-serif; }
         .popup-title { font-size: 17px; font-weight: bold; margin-bottom: 8px; color: #333; border-bottom: 2px solid #4285F4; padding-bottom: 3px; }
         .popup-desc { font-size: 13px; color: #666; margin-bottom: 10px; line-height: 1.5; }
+        /* 사진 스타일 */
         .thumb-img { width: 100%; height: auto; border-radius: 8px; margin-bottom: 10px; border: 1px solid #eee; display: block; }
+        /* 영상 스타일 */
+        .video-container { width: 100%; height: 157px; border-radius: 8px; margin-bottom: 10px; overflow: hidden; }
         .map-btn { 
             display: block; background: #4285F4; color: white; text-align: center; 
             padding: 10px; margin-top: 5px; border-radius: 6px; text-decoration: none; font-size: 13px; font-weight: bold;
@@ -23,60 +26,50 @@
 
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script>
-        // 1. 지도 초기 설정 (우메다와 난바가 다 보이도록 중심점 조정)
-        var map = L.map('map').setView([34.680, 135.502], 13);
-
-        // 2. ★메인 지도를 한국어로 설정★ (구글 지도 한국어 레이어 사용)
-        // 이 주소를 쓰면 지도 바탕의 지명들이 한국어로 나옵니다.
+        // 1. 지도 초기 설정 (한국어 구글 레이어 적용)
+        var map = L.map('map').setView([34.685, 135.502], 13);
         L.tileLayer('https://mt0.google.com/vt/lyrs=m&hl=ko&x={x}&y={y}&z={z}', {
             attribution: '© Google Maps'
         }).addTo(map);
 
-        // 3. 성지순례 데이터 (우메다 관람차 위치 정밀 수정)
+        // 2. 성지순례 데이터 (사진 + 영상 주소 통합)
+        // 사진 경로는 네 깃허브 저장소 이름을 반영했어.
         var locations = [
             {
                 name: "우메다 헵파이브(HEP FIVE) 관람차",
-                coords: [34.7042, 135.5006], // 우메다역 인근 정확한 좌표
-                desc: "멤버들이 빨간 관람차 안에서 오사카 시내를 구경하며 셀카를 남겼던 그곳!",
-                googleMap: "https://www.google.com/maps/search/?api=1&query=HEP+FIVE+Ferris+Wheel&hl=ko",
-                img: "https://raw.githubusercontent.com/ilovemj0914-svg/aa/main/image_4cae7b.jpg" 
+                coords: [34.7042, 135.5006],
+                desc: "멤버들이 빨간 관람차 안에서 셀카를 남겼던 곳!",
+                googleMap: "https://www.google.com/maps/search/?api=1&query=HEP+FIVE&hl=ko",
+                img: "image_4cae7b.jpg", // 저장소에 있는 사진 파일명
+                yt: "https://www.youtube.com/embed/V6_Vp9vC0Xg?start=215" // 관람차 장면
             },
             {
                 name: "신세카이 & 츠텐카쿠",
                 coords: [34.6525, 135.5063],
-                desc: "오사카의 복고풍 감성! 멤버들이 쿠시카츠를 맛있게 먹었던 상점가야.",
+                desc: "오사카의 복고풍 감성! 멤버들의 쿠시카츠 먹방 장소.",
                 googleMap: "https://www.google.com/maps/search/?api=1&query=Tsutenkaku&hl=ko",
-                img: "https://img.youtube.com/vi/V6_Vp9vC0Xg/hqdefault.jpg"
+                img: "https://img.youtube.com/vi/V6_Vp9vC0Xg/hqdefault.jpg",
+                yt: "https://www.youtube.com/embed/V6_Vp9vC0Xg?start=54"
             },
             {
                 name: "아베노 하루카스 300",
                 coords: [34.6458, 135.5139],
-                desc: "일본 최고의 높이! 멤버들이 야경을 보며 감탄했던 전망대야.",
+                desc: "일본 최고의 높이! 멤버들이 야경을 보며 감탄했던 곳.",
                 googleMap: "https://www.google.com/maps/search/?api=1&query=Abeno+Harukas&hl=ko",
-                img: "https://img.youtube.com/vi/V6_Vp9vC0Xg/mqdefault.jpg"
-            },
-            {
-                name: "나카노시마 공원",
-                coords: [34.6923, 135.5065],
-                desc: "멤버들이 여유롭게 산책하며 힐링했던 강변 공원!",
-                googleMap: "https://www.google.com/maps/search/?api=1&query=Nakanoshima+Park&hl=ko",
-                img: "https://img.youtube.com/vi/VtjMPZgy4yU/hqdefault.jpg"
-            },
-            {
-                name: "카라카라테이 (야키니쿠)",
-                coords: [34.6667, 135.5003],
-                desc: "멤버들이 '맛있다!'를 연발하며 우설을 구워 먹던 로컬 맛집.",
-                googleMap: "https://www.google.com/maps/search/?api=1&query=Karakaratei+Osaka&hl=ko",
-                img: "https://img.youtube.com/vi/VtjMPZgy4yU/mqdefault.jpg"
+                img: "https://img.youtube.com/vi/V6_Vp9vC0Xg/mqdefault.jpg",
+                yt: "https://www.youtube.com/embed/V6_Vp9vC0Xg?start=373"
             }
         ];
 
-        // 4. 마커 생성
+        // 3. 마커 및 팝업(사진+영상) 생성
         locations.forEach(function(loc) {
             var popupContent = `
                 <div class="popup-container">
                     <div class="popup-title">${loc.name}</div>
-                    <img src="${loc.img}" class="thumb-img" onerror="this.src='https://via.placeholder.com/250x150?text=Image+Loading...'">
+                    <img src="${loc.img}" class="thumb-img" alt="성지 사진">
+                    <div class="video-container">
+                        <iframe width="100%" height="100%" src="${loc.yt}" frameborder="0" allowfullscreen></iframe>
+                    </div>
                     <div class="popup-desc">${loc.desc}</div>
                     <a href="${loc.googleMap}" target="_blank" class="map-btn">상세 위치 보기</a>
                 </div>
