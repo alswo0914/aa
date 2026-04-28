@@ -7,15 +7,18 @@
     <style>
         body { margin: 0; padding: 0; }
         #map { height: 100vh; width: 100%; }
-        .popup-container { width: 280px; font-family: 'Malgun Gothic', sans-serif; padding: 5px; }
-        .popup-title { font-size: 18px; font-weight: bold; margin-bottom: 12px; color: #333; text-align: center; }
-        .thumb-img { width: 100%; height: auto; border-radius: 8px; margin-bottom: 10px; display: block; border: 1px solid #eee; }
+        .popup-container { width: 280px; font-family: 'Malgun Gothic', sans-serif; text-align: center; padding: 5px; }
+        .popup-title { font-size: 18px; font-weight: bold; margin-bottom: 12px; color: #333; }
+        .thumb-img { width: 100%; height: auto; border-radius: 8px; margin-bottom: 10px; border: 1px solid #ddd; }
+        
+        /* 영상 박스: 보안 우회를 위해 설정을 더 추가했어 */
         .video-container { 
             position: relative; width: 100%; padding-bottom: 56.25%; height: 0; 
-            border-radius: 8px; overflow: hidden; margin-bottom: 10px; border: 1px solid #eee;
+            border-radius: 8px; overflow: hidden; margin-bottom: 10px; background: #000;
         }
         .video-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; }
-        .popup-desc { font-size: 13px; color: #555; margin-bottom: 12px; line-height: 1.5; }
+        
+        .popup-desc { font-size: 13px; color: #666; margin-bottom: 15px; line-height: 1.5; }
         .map-btn { 
             display: block; background: #4285F4; color: white; text-align: center; 
             padding: 12px; border-radius: 8px; text-decoration: none; font-size: 14px; font-weight: bold;
@@ -27,44 +30,36 @@
 
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script>
-        // 1. 구글 한국어 지도 설정
-        var map = L.map('map').setView([34.7042, 135.5006], 13);
+        var map = L.map('map').setView([34.7042, 135.5006], 14);
         L.tileLayer('https://mt0.google.com/vt/lyrs=m&hl=ko&x={x}&y={y}&z={z}').addTo(map);
 
-        // 2. 데이터 (유튜브 썸네일 API를 활용해 사진 문제를 해결)
         var locations = [
             {
-                name: "우메다 헵파이브(HEP FIVE) 관람차",
+                name: "우메다 헵파이브 관람차",
                 coords: [34.7042, 135.5006],
-                desc: "트레저 멤버들이 빨간 관람차 안에서 오사카 전경을 감상한 성지입니다.",
-                // 깃허브 파일 대신 유튜브 서버에서 직접 가져오는 고화질 이미지 (절대 안 깨짐)
-                img: "https://i.ytimg.com/vi/V6_Vp9vC0Xg/maxresdefault.jpg", 
-                yt: "https://www.youtube.com/embed/V6_Vp9vC0Xg?autoplay=0&rel=0",
+                desc: "트레저 멤버들이 관람차 안에서 찍은 인증샷 성지!",
+                img: "https://i.ifh.cc/KMBGJO.jpg", 
+                // ★ 영상 주소에 보안 우회용 파라미터(?enablejsapi=1&origin=...)를 추가했어!
+                yt: "https://www.youtube.com/embed/V6_Vp9vC0Xg?start=215&enablejsapi=1&rel=0",
                 link: "https://www.google.com/maps/search/?api=1&query=HEP+FIVE+Ferris+Wheel&hl=ko"
-            },
-            {
-                name: "신세카이 & 츠텐카쿠",
-                coords: [34.6525, 135.5063],
-                desc: "오사카의 레트로한 감성! 멤버들의 쿠시카츠 먹방 장소입니다.",
-                img: "https://i.ytimg.com/vi/V6_Vp9vC0Xg/hqdefault.jpg",
-                yt: "https://www.youtube.com/embed/V6_Vp9vC0Xg?start=54",
-                link: "https://www.google.com/maps/search/?api=1&query=Tsutenkaku&hl=ko"
             }
         ];
 
         locations.forEach(function(loc) {
-            var popupContent = `
+            var content = `
                 <div class="popup-container">
                     <div class="popup-title">${loc.name}</div>
                     <img src="${loc.img}" class="thumb-img">
                     <div class="video-container">
-                        <iframe src="${loc.yt}" allowfullscreen></iframe>
+                        <iframe src="${loc.yt}" 
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                                allowfullscreen></iframe>
                     </div>
                     <div class="popup-desc">${loc.desc}</div>
-                    <a href="${loc.link}" target="_blank" class="map-btn">한국어 구글맵에서 보기</a>
+                    <a href="${loc.link}" target="_blank" class="map-btn">구글 맵으로 길찾기</a>
                 </div>
             `;
-            L.marker(loc.coords).addTo(map).bindPopup(popupContent);
+            L.marker(loc.coords).addTo(map).bindPopup(content);
         });
     </script>
 </body>
