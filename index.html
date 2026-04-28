@@ -7,21 +7,15 @@
     <style>
         body { margin: 0; padding: 0; }
         #map { height: 100vh; width: 100%; }
-        
-        /* 예시 이미지와 유사한 팝업 스타일 */
         .popup-container { width: 300px; font-family: 'Malgun Gothic', sans-serif; padding: 5px; }
-        .popup-title { font-size: 18px; font-weight: bold; margin-bottom: 10px; color: #333; text-align: center; }
-        
-        /* 사진 스타일 */
-        .thumb-img { width: 100%; height: auto; border-radius: 5px; margin-bottom: 10px; display: block; border: 1px solid #ddd; }
-        
-        /* 유튜브 영상 스타일 */
+        .popup-title { font-size: 18px; font-weight: bold; margin-bottom: 12px; color: #333; text-align: center; }
+        .thumb-img { width: 100%; height: auto; border-radius: 5px; margin-bottom: 10px; display: block; border: 1px solid #eee; }
         .video-container { 
             position: relative; width: 100%; padding-bottom: 56.25%; 
-            height: 0; border-radius: 5px; overflow: hidden; margin-bottom: 10px; border: 1px solid #ddd;
+            height: 0; border-radius: 5px; overflow: hidden; margin-bottom: 10px; border: 1px solid #eee;
         }
         .video-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
-        
+        .popup-desc { font-size: 13px; color: #555; margin-bottom: 12px; line-height: 1.5; }
         .map-btn { 
             display: block; background: #4285F4; color: white; text-align: center; 
             padding: 12px; border-radius: 8px; text-decoration: none; font-size: 14px; font-weight: bold;
@@ -33,21 +27,20 @@
 
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script>
-        // 1. 지도 초기 설정 (한국어 구글 레이어 적용)
+        // 1. 배경 지도 한국어 설정 (구글 지도 레이어)
         var map = L.map('map').setView([34.7042, 135.5006], 13);
         L.tileLayer('https://mt0.google.com/vt/lyrs=m&hl=ko&x={x}&y={y}&z={z}', {
             attribution: '© Google Maps'
         }).addTo(map);
 
-        // 2. 성지순례 데이터 (파일명 '우메다.jpg' 반영)
+        // 2. 데이터 (네가 말한 파일명 umeda.jpg.png 반영)
         var locations = [
             {
                 name: "우메다 헵파이브(HEP FIVE) 관람차",
                 coords: [34.7042, 135.5006],
                 desc: "멤버들이 빨간 관람차 안에서 오사카 시내를 구경하며 셀카를 남겼던 그곳!",
-                googleMap: "https://www.google.com/maps/search/?api=1&query=HEP+FIVE&hl=ko",
-                // ★사진 파일명을 '우메다.jpg'로 정확히 맞췄어.
-                img: "우메다.jpg", 
+                googleMap: "https://www.google.com/maps/search/?api=1&query=HEP+FIVE+Ferris+Wheel&hl=ko",
+                img: "umeda.jpg.png", // ← 여기에 파일명을 똑같이 적어야 사진이 나와!
                 yt: "https://www.youtube.com/embed/V6_Vp9vC0Xg?start=215" 
             },
             {
@@ -60,19 +53,15 @@
             }
         ];
 
-        // 3. 마커 및 팝업 생성
         locations.forEach(function(loc) {
             var popupContent = `
                 <div class="popup-container">
                     <div class="popup-title">${loc.name}</div>
-                    
-                    <img src="${loc.img}" class="thumb-img" alt="성지 사진">
-                    
+                    <img src="${loc.img}" class="thumb-img" alt="성지 사진" onerror="this.src='https://via.placeholder.com/300x200?text=Image+Not+Found'">
                     <div class="video-container">
                         <iframe src="${loc.yt}" frameborder="0" allowfullscreen></iframe>
                     </div>
-                    
-                    <p style="font-size:13px; color:#555; margin-bottom:12px;">${loc.desc}</p>
+                    <div class="popup-desc">${loc.desc}</div>
                     <a href="${loc.googleMap}" target="_blank" class="map-btn">상세 위치 보기</a>
                 </div>
             `;
