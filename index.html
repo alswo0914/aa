@@ -2,72 +2,51 @@
 <html lang="ko">
 <head>
     <meta charset="utf-8">
-    <title>트레저 오사카 성지순례 지도</title>
+    <title>트레저 오사카 성지순례</title>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <style>
         body { margin: 0; padding: 0; }
         #map { height: 100vh; width: 100%; }
-        /* 팝업 내부 디자인 최적화 */
-        .popup-container { width: 280px; font-family: 'Malgun Gothic', sans-serif; text-align: center; padding: 5px; }
-        .popup-title { font-size: 18px; font-weight: bold; margin-bottom: 12px; color: #333; }
+        .popup-container { width: 280px; font-family: sans-serif; text-align: center; }
+        .popup-title { font-size: 17px; font-weight: bold; margin-bottom: 10px; }
+        .thumb-img { width: 100%; border-radius: 8px; margin-bottom: 10px; }
         
-        /* 사진 스타일: 네가 찾은 ifh.cc 링크 사용 */
-        .thumb-img { width: 100%; height: auto; border-radius: 8px; margin-bottom: 10px; border: 1px solid #eee; display: block; }
-        
-        /* 영상 박스: 유튜브 보안 정책 대응 */
-        .video-container { 
+        /* 가장 단순하고 확실한 영상 박스 */
+        .video-box { 
             position: relative; width: 100%; padding-bottom: 56.25%; height: 0; 
-            border-radius: 8px; overflow: hidden; margin-bottom: 10px; background: #000;
+            border-radius: 8px; overflow: hidden; background: #000; margin-bottom: 10px;
         }
-        .video-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; }
+        .video-box iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; }
         
-        .popup-desc { font-size: 13px; color: #666; margin-bottom: 15px; line-height: 1.5; word-break: keep-all; }
         .map-btn { 
-            display: block; background: #4285F4; color: white; text-align: center; 
-            padding: 12px; border-radius: 8px; text-decoration: none; font-size: 14px; font-weight: bold;
+            display: block; background: #4285F4; color: white; padding: 10px; 
+            border-radius: 5px; text-decoration: none; font-weight: bold; font-size: 13px;
         }
     </style>
 </head>
 <body>
     <div id="map"></div>
-
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script>
-        // 1. 지도 설정 (한국어 구글 지도로 고정)
         var map = L.map('map').setView([34.7042, 135.5006], 14);
         L.tileLayer('https://mt1.google.com/vt/lyrs=m&hl=ko&x={x}&y={y}&z={z}').addTo(map);
 
-        // 2. 데이터 구성
-        var locations = [
-            {
-                name: "우메다 헵파이브 관람차",
-                coords: [34.7042, 135.5006],
-                desc: "트레저 멤버들이 관람차 안에서 찍은 인증샷 성지입니다!",
-                // ★ 네가 찾은 진짜 이미지 주소!
-                img: "https://i.ifh.cc/KMBGJO.jpg", 
-                // ★ 보안 우회 설정(?enablejsapi=1)이 들어간 유튜브 주소
-                yt: "https://www.youtube.com/embed/V6_Vp9vC0Xg?start=215&enablejsapi=1&rel=0",
-                link: "https://www.google.com/maps/search/?api=1&query=34.7042,135.5006&hl=ko"
-            }
-        ];
-
-        // 3. 마커 및 팝업 생성
-        locations.forEach(function(loc) {
-            var content = `
-                <div class="popup-container">
-                    <div class="popup-title">${loc.name}</div>
-                    <img src="${loc.img}" class="thumb-img">
-                    <div class="video-container">
-                        <iframe src="${loc.yt}" 
-                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                                allowfullscreen></iframe>
-                    </div>
-                    <div class="popup-desc">${loc.desc}</div>
-                    <a href="${loc.link}" target="_blank" class="map-btn">한국어 구글맵 열기</a>
+        var content = `
+            <div class="popup-container">
+                <div class="popup-title">우메다 헵파이브 관람차</div>
+                
+                <img src="https://i.ifh.cc/KMBGJO.jpg" class="thumb-img">
+                
+                <div class="video-box">
+                    <iframe src="https://www.youtube.com/embed/V6_Vp9vC0Xg?start=215" allowfullscreen></iframe>
                 </div>
-            `;
-            L.marker(loc.coords).addTo(map).bindPopup(content);
-        });
+                
+                <p style="font-size:12px; color:#666;">멤버들이 방문한 오사카 성지!</p>
+                <a href="https://www.google.com/maps/search/?api=1&query=HEP+FIVE+Ferris+Wheel&hl=ko" target="_blank" class="map-btn">구글맵에서 위치 보기</a>
+            </div>
+        `;
+
+        L.marker([34.7042, 135.5006]).addTo(map).bindPopup(content);
     </script>
 </body>
 </html>
