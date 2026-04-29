@@ -63,7 +63,7 @@
                 lat: 34.6527, lng: 135.5064,
                 img: "https://i.ifh.cc/Bmab3m.jpg",
                 ytId: "sGNVI6fFS68",
-                start: 190, // ★ 3분 10초 (190초)로 정밀 수정 완료
+                start: 190, 
                 desc: "🍢 <b>바삭한 식감이 일품인 오사카 명물</b><br>신세카이 맛집답게 쉴 새 없이 꼬치를 비워냈던 바로 그 식당",
                 link: "https://goo.gl/maps/n2cI11_nAGAR"
             },
@@ -97,12 +97,15 @@
         ];
 
         locations.forEach(function(loc) {
+            // 주소에 youtube-nocookie를 적용하여 광고 쿠키 최소화
+            var videoUrl = `https://www.youtube-nocookie.com/embed/${loc.ytId}?start=${loc.start}`;
+            
             var content = `
                 <div class="popup-box">
                     <h3 style="margin:5px 0; color:#00ADEF;">${loc.name}</h3>
-                    <img src="${loc.img}" class="thumb-img" alt="현장 인증샷">
+                    <img src="${loc.img}" class="thumb-img" alt="인증샷">
                     <div class="video-container">
-                        <iframe src="https://www.youtube.com/embed/${loc.ytId}?start=${loc.start}" allowfullscreen></iframe>
+                        <iframe src="${videoUrl}" allowfullscreen></iframe>
                     </div>
                     <p style="font-size:12px; color:#444; margin-bottom:15px; line-height:1.6;">${loc.desc}</p>
                     <a href="${loc.link}" target="_blank" class="map-btn">상세정보</a>
