@@ -16,7 +16,6 @@
         }
         .video-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; }
         
-        /* 버튼 스타일: 깔끔하게 '상세정보'만 표시 */
         .map-btn { 
             display: block; background: #4285F4; color: white; padding: 10px; 
             border-radius: 8px; text-decoration: none; font-weight: bold; font-size: 13px;
@@ -39,43 +38,43 @@
                 ytId: "sGNVI6fFS68",
                 start: 707,
                 desc: "🎡 <b>오사카 도심을 수놓는 레드 관람차</b><br>랜드마크답게 높은 곳에서 도심 야경을 보며 다 같이 감탄했던 장소!",
-                link: "https://www.google.com/maps/search/?api=1&query=HEP+FIVE+Ferris+Wheel"
+                link: "https://goo.gl/maps/AQDAo5PmAGAR"
             },
             {
                 name: "본가 오타코 도톤보리 본점",
                 lat: 34.6686, lng: 135.5032,
                 img: "https://i.ifh.cc/K9Q3GL.jpg",
                 ytId: "sGNVI6fFS68",
-                start: 898,
+                start: 980, 
                 desc: "🐙 <b>큼직한 문어가 매력적인 타코야키</b><br>길거리 먹방의 정석으로, 뜨거운 타코야키를 호호 불며 즐겁게 맛보던 곳",
-                link: "https://www.google.com/maps/search/?api=1&query=Honke+Otako+Dotonbori"
+                link: "https://goo.gl/maps/U3WQMmXnAGAR"
             },
             {
                 name: "스미비야키 호르몬 카라카라테이",
                 lat: 34.6665, lng: 135.4993,
                 img: "https://i.ifh.cc/ktaqSZ.jpg", 
                 ytId: "VtjMPZgy4yU",
-                start: 300,
+                start: 275, 
                 desc: "🥩 <b>숯불 향 가득한 현지인 야키니쿠 맛집</b><br>가성비 훌륭한 난바 고깃집으로, 찐텐 가득한 고기 먹방을 선보인 성지",
-                link: "https://www.google.com/maps/search/?api=1&query=Karakaratei+Namba"
+                link: "https://goo.gl/maps/584H3xLnAGAR"
             },
             {
                 name: "쿠시카츠 다루마 츠텐카쿠점",
                 lat: 34.6527, lng: 135.5064,
                 img: "https://i.ifh.cc/Bmab3m.jpg",
                 ytId: "sGNVI6fFS68",
-                start: 54,
+                start: 190, // ★ 3분 10초 (190초)로 정밀 수정 완료
                 desc: "🍢 <b>바삭한 식감이 일품인 오사카 명물</b><br>신세카이 맛집답게 쉴 새 없이 꼬치를 비워냈던 바로 그 식당",
-                link: "https://www.google.com/maps/search/?api=1&query=Kushikatsu+Daruma+Tsutenkaku"
+                link: "https://goo.gl/maps/n2cI11_nAGAR"
             },
             {
                 name: "쓰텐카쿠 전망대",
                 lat: 34.6525, lng: 135.5063,
                 img: "https://i.ifh.cc/DcHlcn.jpg", 
                 ytId: "sGNVI6fFS68",
-                start: 54,
+                start: 375,
                 desc: "🗼 <b>레트로 오사카의 상징적인 타워</b><br>전망대 구경부터 빌리켄 동상까지, 오사카 정취를 마음껏 만끽하던 스팟",
-                link: "https://www.google.com/maps/search/?api=1&query=Tsutenkaku"
+                link: "https://goo.gl/maps/_0Lgd2DnAGAR"
             },
             {
                 name: "나카노시마 공원",
@@ -84,16 +83,16 @@
                 ytId: "VtjMPZgy4yU",
                 start: 70,
                 desc: "🌹 <b>강바람과 장미 정원이 어우러진 휴식처</b><br>바쁜 일정 중 여유롭게 산책하며 힐링 타임을 가졌던 평화로운 공간",
-                link: "https://www.google.com/maps/search/?api=1&query=Nakanoshima+Park"
+                link: "https://goo.gl/maps/PXiMg97mAGAR"
             },
             {
                 name: "도톤보리 글리코상",
                 lat: 34.6689, lng: 135.5010,
                 img: "https://i.ifh.cc/4gOAz3.jpg", 
                 ytId: "sGNVI6fFS68", 
-                start: 898,
+                start: 891,
                 desc: "📸 <b>오사카 여행의 영원한 베스트 포토존</b><br>다 같이 시그니처 포즈를 남기며 방문을 인증했던 도톤보리의 심장",
-                link: "https://www.google.com/maps/search/?api=1&query=Glico+Sign+Dotonbori"
+                link: "https://goo.gl/maps/6XHOkxTnAGAR"
             }
         ];
 
@@ -101,7 +100,7 @@
             var content = `
                 <div class="popup-box">
                     <h3 style="margin:5px 0; color:#00ADEF;">${loc.name}</h3>
-                    <img src="${loc.img}" class="thumb-img" alt="인증샷">
+                    <img src="${loc.img}" class="thumb-img" alt="현장 인증샷">
                     <div class="video-container">
                         <iframe src="https://www.youtube.com/embed/${loc.ytId}?start=${loc.start}" allowfullscreen></iframe>
                     </div>
