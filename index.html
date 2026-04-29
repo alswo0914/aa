@@ -28,6 +28,7 @@
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script>
         var map = L.map('map').setView([34.67, 135.50], 13);
+        // 지도는 한국어로 나오게 설정 완료!
         L.tileLayer('https://mt1.google.com/vt/lyrs=m&hl=ko&x={x}&y={y}&z={z}').addTo(map);
 
         var locations = [
@@ -97,13 +98,12 @@
         ];
 
         locations.forEach(function(loc) {
-            // 주소에 youtube-nocookie를 적용하여 광고 쿠키 최소화
             var videoUrl = `https://www.youtube-nocookie.com/embed/${loc.ytId}?start=${loc.start}`;
             
             var content = `
                 <div class="popup-box">
                     <h3 style="margin:5px 0; color:#00ADEF;">${loc.name}</h3>
-                    <img src="${loc.img}" class="thumb-img" alt="인증샷">
+                    <img src="${loc.img}" class="thumb-img" alt="현장사진">
                     <div class="video-container">
                         <iframe src="${videoUrl}" allowfullscreen></iframe>
                     </div>
