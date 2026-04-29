@@ -25,10 +25,10 @@
     <div id="map"></div>
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script>
-        // 지도 초기화
+        // 지도 초기화 (오사카 중심)
         var map = L.map('map').setView([34.67, 135.50], 12);
 
-        // 배경 지도 (가장 안정적인 기본 레이어)
+        // 배경 지도 타일 설정 (가장 안정적인 방식)
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
 
         var locations = [
@@ -39,7 +39,7 @@
                 ytId: "sGNVI6fFS68",
                 start: 707,
                 desc: "🎡 <b>오사카 도심을 수놓는 레드 관람차</b>",
-                url: "https://maps.app.goo.gl/AQDAo5PmAGAR"
+                link: "https://maps.app.goo.gl/AQDAo5PmAGARnS7Y9"
             },
             {
                 name: "본가 오타코 도톤보리 본점",
@@ -48,7 +48,7 @@
                 ytId: "sGNVI6fFS68",
                 start: 980, 
                 desc: "🐙 <b>큼직한 문어가 매력적인 타코야키</b>",
-                url: "https://maps.app.goo.gl/U3WQMmXnAGAR"
+                link: "https://maps.app.goo.gl/U3WQMmXnAGARnS7Y9"
             },
             {
                 name: "스미비야키 호르몬 카라카라테이",
@@ -57,7 +57,7 @@
                 ytId: "VtjMPZgy4yU",
                 start: 275, 
                 desc: "🥩 <b>숯불 향 가득한 현지인 야키니쿠 맛집</b>",
-                url: "https://maps.app.goo.gl/584H3xLnAGAR"
+                link: "https://maps.app.goo.gl/584H3xLnAGARnS7Y9"
             },
             {
                 name: "쿠시카츠 다루마 츠텐카쿠점",
@@ -66,7 +66,7 @@
                 ytId: "sGNVI6fFS68",
                 start: 190, 
                 desc: "🍢 <b>바삭한 식감이 일품인 오사카 명물</b>",
-                url: "https://maps.app.goo.gl/n2cI11_nAGAR"
+                link: "https://maps.app.goo.gl/n2cI11_nAGARnS7Y9"
             },
             {
                 name: "쓰텐카쿠 전망대",
@@ -75,7 +75,7 @@
                 ytId: "sGNVI6fFS68",
                 start: 375,
                 desc: "🗼 <b>레트로 오사카의 상징적인 타워</b>",
-                url: "https://maps.app.goo.gl/0Lgd2DnAGAR"
+                link: "https://maps.app.goo.gl/0Lgd2DnAGARnS7Y9"
             },
             {
                 name: "나카노시마 공원",
@@ -84,7 +84,7 @@
                 ytId: "VtjMPZgy4yU",
                 start: 70,
                 desc: "🌹 <b>강바람과 장미 정원이 어우러진 휴식처</b>",
-                url: "https://maps.app.goo.gl/PXiMg97mAGAR"
+                link: "https://maps.app.goo.gl/PXiMg97mAGARnS7Y9"
             },
             {
                 name: "도톤보리 글리코상",
@@ -93,7 +93,7 @@
                 ytId: "sGNVI6fFS68", 
                 start: 891,
                 desc: "📸 <b>오사카 여행의 영원한 베스트 포토존</b>",
-                url: "https://maps.app.goo.gl/6XHOkxTnAGAR"
+                link: "https://maps.app.goo.gl/6XHOkxTnAGARnS7Y9"
             }
         ];
 
@@ -102,12 +102,12 @@
             var content = `
                 <div class="popup-box">
                     <h3 style="margin:5px 0; color:#00ADEF;">${loc.name}</h3>
-                    <img src="${loc.img}" class="thumb-img" alt="현장">
+                    <img src="${loc.img}" class="thumb-img" alt="인증샷">
                     <div class="video-container">
                         <iframe src="${videoUrl}" allowfullscreen></iframe>
                     </div>
                     <p style="font-size:12px; color:#444; margin-bottom:15px; line-height:1.6;">${loc.desc}</p>
-                    <a href="${loc.url}" target="_blank" class="map-btn">상세정보</a>
+                    <a href="${loc.link}" target="_blank" class="map-btn">상세정보</a>
                 </div>
             `;
             L.marker([loc.lat, loc.lng]).addTo(map).bindPopup(content);
