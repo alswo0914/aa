@@ -2,11 +2,11 @@
 <html lang="ko">
 <head>
     <meta charset="utf-8">
-    <title>트레저 오사카 성지순례 투어</title>
+    <title>트레저 오사카 투어 지도</title>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <style>
         body { margin: 0; padding: 0; }
-        #map { height: 100vh; width: 100%; }
+        #map { height: 100vh; width: 100%; background: #fff; }
         .popup-box { width: 280px; text-align: center; font-family: 'Malgun Gothic', sans-serif; }
         .thumb-img { width: 100%; border-radius: 8px; margin-bottom: 10px; border: 1px solid #ddd; display: block; }
         .video-container { 
@@ -15,7 +15,7 @@
         }
         .video-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; }
         .map-btn { 
-            display: block; background: #4285F4; color: white; padding: 10px; 
+            display: block; background: #4285F4; color: white !important; padding: 10px; 
             border-radius: 8px; text-decoration: none; font-weight: bold; font-size: 13px;
         }
         .leaflet-popup-content { width: 300px !important; }
@@ -25,75 +25,70 @@
     <div id="map"></div>
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script>
-        // 지도 초기화 (오사카 중심)
-        var map = L.map('map').setView([34.67, 135.50], 12);
+        // 지도 초기화
+        var map = L.map('map').setView([34.6937, 135.5023], 13);
 
-        // 배경 지도 타일 설정 (가장 안정적인 방식)
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
+        // [중요] 한국어(hl=ko) 강제 설정 + HTTPS 보안 적용
+        L.tileLayer('https://mt1.google.com/vt/lyrs=m&hl=ko&gl=kr&x={x}&y={y}&z={z}', {
+            attribution: 'Map data &copy; Google'
+        }).addTo(map);
 
         var locations = [
             {
                 name: "우메다 헵파이브 관람차",
                 lat: 34.7038, lng: 135.4999,
                 img: "https://i.ifh.cc/KMBGJO.jpg",
-                ytId: "sGNVI6fFS68",
-                start: 707,
+                ytId: "sGNVI6fFS68", start: 707,
                 desc: "🎡 <b>오사카 도심을 수놓는 레드 관람차</b>",
-                link: "https://maps.app.goo.gl/AQDAo5PmAGARnS7Y9"
+                link: "https://www.google.com/maps/search/?api=1&query=HEP+FIVE+Ferris+Wheel"
             },
             {
                 name: "본가 오타코 도톤보리 본점",
                 lat: 34.6686, lng: 135.5032,
                 img: "https://i.ifh.cc/K9Q3GL.jpg",
-                ytId: "sGNVI6fFS68",
-                start: 980, 
+                ytId: "sGNVI6fFS68", start: 980, 
                 desc: "🐙 <b>큼직한 문어가 매력적인 타코야키</b>",
-                link: "https://maps.app.goo.gl/U3WQMmXnAGARnS7Y9"
+                link: "https://www.google.com/maps/search/?api=1&query=Honke+Otako+Dotonbori"
             },
             {
                 name: "스미비야키 호르몬 카라카라테이",
                 lat: 34.6665, lng: 135.4993,
                 img: "https://i.ifh.cc/ktaqSZ.jpg", 
-                ytId: "VtjMPZgy4yU",
-                start: 275, 
+                ytId: "VtjMPZgy4yU", start: 275, 
                 desc: "🥩 <b>숯불 향 가득한 현지인 야키니쿠 맛집</b>",
-                link: "https://maps.app.goo.gl/584H3xLnAGARnS7Y9"
+                link: "https://www.google.com/maps/search/?api=1&query=Karakaratei+Namba"
             },
             {
                 name: "쿠시카츠 다루마 츠텐카쿠점",
                 lat: 34.6527, lng: 135.5064,
                 img: "https://i.ifh.cc/Bmab3m.jpg",
-                ytId: "sGNVI6fFS68",
-                start: 190, 
+                ytId: "sGNVI6fFS68", start: 190, 
                 desc: "🍢 <b>바삭한 식감이 일품인 오사카 명물</b>",
-                link: "https://maps.app.goo.gl/n2cI11_nAGARnS7Y9"
+                link: "https://www.google.com/maps/search/?api=1&query=Kushikatsu+Daruma+Tsutenkaku"
             },
             {
                 name: "쓰텐카쿠 전망대",
                 lat: 34.6525, lng: 135.5063,
                 img: "https://i.ifh.cc/DcHlcn.jpg", 
-                ytId: "sGNVI6fFS68",
-                start: 375,
+                ytId: "sGNVI6fFS68", start: 375,
                 desc: "🗼 <b>레트로 오사카의 상징적인 타워</b>",
-                link: "https://maps.app.goo.gl/0Lgd2DnAGARnS7Y9"
+                link: "https://www.google.com/maps/search/?api=1&query=Tsutenkaku"
             },
             {
                 name: "나카노시마 공원",
                 lat: 34.6924, lng: 135.5073,
                 img: "https://i.ifh.cc/NQlfry.jpg",
-                ytId: "VtjMPZgy4yU",
-                start: 70,
+                ytId: "VtjMPZgy4yU", start: 70,
                 desc: "🌹 <b>강바람과 장미 정원이 어우러진 휴식처</b>",
-                link: "https://maps.app.goo.gl/PXiMg97mAGARnS7Y9"
+                link: "https://www.google.com/maps/search/?api=1&query=Nakanoshima+Park"
             },
             {
                 name: "도톤보리 글리코상",
                 lat: 34.6689, lng: 135.5010,
                 img: "https://i.ifh.cc/4gOAz3.jpg", 
-                ytId: "sGNVI6fFS68", 
-                start: 891,
+                ytId: "sGNVI6fFS68", start: 891,
                 desc: "📸 <b>오사카 여행의 영원한 베스트 포토존</b>",
-                link: "https://maps.app.goo.gl/6XHOkxTnAGARnS7Y9"
+                link: "https://www.google.com/maps/search/?api=1&query=Glico+Man+Dotonbori"
             }
         ];
 
